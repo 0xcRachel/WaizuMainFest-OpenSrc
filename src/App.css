@@ -1,0 +1,610 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f0f12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+  padding: 20px;
+}
+
+.steam-dashboard {
+  width: 800px;
+  height: 600px;
+  background: #ffffff;
+  /* border-radius: 28px; */
+  overflow: hidden;
+  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Ảnh absolute nằm trên cùng */
+.dashboard-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 28px 28px 0 0;
+}
+
+.dashboard-bg-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dashboard-header {
+  position: relative;
+  z-index: 1;
+  padding: 20px 28px 12px 28px;
+  border-bottom: 1px solid #eef2f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.admin-title h1 {
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: #1a1e2b;
+  margin-bottom: 4px;
+}
+
+.admin-badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #5b6e8c;
+  background: #f0f2f5;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 40px;
+}
+
+.header-right {
+  font-size: 0.75rem;
+  color: #7f8fa4;
+  background: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 40px;
+  font-weight: 450;
+}
+
+.dashboard-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 20px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+}
+
+.search-section {
+  position: relative;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+.input-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #5e6f8d;
+  margin-bottom: 8px;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+/* Input style - bo tròn vừa phải */
+.modern-input {
+  width: 100%;
+  height: 40px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-family: 'Inter', monospace;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 5px;
+  color: #11181c;
+  font-weight: 450;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modern-input:hover:not(:read-only) {
+  border-color: #cbd5e1;
+}
+
+.modern-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.modern-input::placeholder {
+  color: #b9c2d0;
+  font-weight: 400;
+}
+
+.modern-input:read-only {
+  background: #f8fafc;
+  cursor: default;
+  border-color: #eef2f5;
+  color: #5e6f8d;
+}
+
+/* Search Results Dropdown */
+.search-results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  margin-top: 8px;
+}
+
+.search-results-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.search-results-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.search-results-dropdown::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid #eef2f5;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+}
+
+.search-item:hover {
+  background: #f8fafc;
+}
+
+.search-item-image {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.search-item-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-item-name {
+  font-weight: 500;
+  color: #1a1e2b;
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.search-item-id {
+  font-size: 0.7rem;
+  color: #8b9bb0;
+  font-family: monospace;
+  flex-shrink: 0;
+}
+
+.appid-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.appid-field {
+  flex: 2;
+}
+
+.helper-note {
+  font-size: 0.7rem;
+  color: #95a5bc;
+  margin-top: -8px;
+  letter-spacing: 0.2px;
+  font-style: italic;
+}
+
+/* Game Preview Row */
+.game-preview-row {
+  display: flex;
+  gap: 24px;
+  background: #fbfdff;
+  border: 1px solid #ecf3f9;
+  border-radius: 20px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.game-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 94px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-image-placeholder {
+  font-size: 0.7rem;
+  color: #8b9bb0;
+  text-align: center;
+  padding: 8px;
+}
+
+.manifest-info {
+  flex: 1;
+}
+
+.manifest-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #eef2f8;
+  padding-bottom: 8px;
+}
+
+.manifest-header span {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #3c4b64;
+  letter-spacing: 0.3px;
+}
+
+.preview-placeholder {
+  color: #8b9bb0;
+  font-size: 0.85rem;
+}
+
+.preview-placeholder p {
+  margin: 6px 0;
+  color: #3c4b64;
+  line-height: 1.4;
+}
+
+.preview-placeholder strong {
+  color: #1a1e2b;
+}
+
+.preview-placeholder small {
+  font-size: 0.75rem;
+  color: #8b9bb0;
+  line-height: 1.3;
+}
+
+.preview-placeholder details {
+  margin-top: 10px;
+}
+
+.preview-placeholder details summary {
+  cursor: pointer;
+  color: #5e6f8d;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.preview-placeholder details summary:hover {
+  color: #3c4b64;
+}
+
+.preview-placeholder pre {
+  font-size: 0.7rem;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: monospace;
+  line-height: 1.5;
+  color: #3c4b64;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Manifest Status */
+.manifest-status-box {
+  margin: 8px 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+}
+
+.manifest-status-box.success {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.manifest-status-box.error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.manifest-status-box.info {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.manifest-status-box strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.manifest-status-box code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-family: monospace;
+}
+
+.manifest-status-box p {
+  margin: 4px 0;
+  font-size: 0.75rem;
+}
+
+.manifest-status-box details {
+  margin-top: 8px;
+}
+
+.manifest-status-box details summary {
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.manifest-status-box details summary:hover {
+  opacity: 1;
+}
+
+.branches-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.branch-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: white;
+  border-radius: 16px;
+  font-size: 0.7rem;
+  font-family: monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #3c4b64;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.branch-tag:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+/* Download Action */
+.download-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.btn-download {
+  background: #1f2a3e;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 40px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.btn-download:hover:not(:disabled) {
+  background: #11161f;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-download:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Status Message */
+.status-message {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-align: right;
+  margin-top: 8px;
+}
+
+.status-alert {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+.status-alert.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-alert.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-alert.info {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Loading States */
+.loading-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #e2e8f0;
+  border-top-color: #5e6f8d;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar */
+.dashboard-main::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dashboard-main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .steam-dashboard {
+    width: 95%;
+    height: auto;
+    min-height: 500px;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-right {
+    align-self: flex-start;
+  }
+  
+  .game-preview-row {
+    flex-direction: column;
+  }
+  
+  .game-image {
+    width: 100%;
+    height: 120px;
+  }
+  
+  .search-item-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .search-item-name {
+    width: 100%;
+  }
+  
+  .appid-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .download-action {
+    justify-content: center;
+  }
+  
+  .btn-download {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding: 16px;
+  }
+  
+  .game-preview-row {
+    padding: 14px;
+  }
+  
+  .manifest-header span {
+    font-size: 0.7rem;
+  }
+  
+  .search-item {
+    padding: 8px 12px;
+  }
+}
