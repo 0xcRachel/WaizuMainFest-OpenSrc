@@ -4,7 +4,7 @@
 
 **Steam Game Manager & Manifest Tool**
 
-<img src='../WaizuMainFest/public/img/screen.png'>
+<img src='./public/img/screen.png'>
 
 </div>
 
